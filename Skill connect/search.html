@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Search Friends | Skill Connect</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#2a14b4",
+                        "primary-container": "#4338ca",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#464554",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-lowest": "#ffffff",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+    <!-- Sidebar Navigation -->
+    <aside class="fixed left-0 top-0 h-full w-72 bg-slate-50/85 backdrop-blur-xl border-r border-slate-200/10 flex flex-col py-12 px-6 z-50">
+        <div class="mb-12">
+            <h1 class="text-2xl font-bold tracking-tighter text-indigo-800">SkillConnect</h1>
+            <p class="text-on-surface-variant text-sm opacity-70">Scholarly Broadset</p>
+        </div>
+        <nav class="flex flex-col space-y-6">
+            <a class="text-slate-500 pl-5 flex items-center gap-3 hover:translate-x-1 transition-transform" href="hackathons.html">
+                <span class="material-symbols-outlined">event_available</span>
+                Hackathons
+            </a>
+            <a class="text-indigo-700 font-semibold border-l-4 border-indigo-700 pl-4 flex items-center gap-3 transition-transform" href="search.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">search</span>
+                Search
+            </a>
+            <a class="text-slate-500 pl-5 flex items-center gap-3 hover:translate-x-1 transition-transform" href="chat.html">
+                <span class="material-symbols-outlined">chat_bubble</span>
+                Chat
+            </a>
+            <a class="text-slate-500 pl-5 flex items-center gap-3 hover:translate-x-1 transition-transform" href="profile.html">
+                <span class="material-symbols-outlined">person_outline</span>
+                Profile
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Top Nav -->
+    <header class="sticky top-0 w-full z-40 bg-white/80 backdrop-blur-md flex justify-between items-center px-12 h-20 ml-72">
+        <div class="flex items-center gap-8 w-full max-w-2xl">
+            <div class="relative w-full">
+                <span class="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-on-surface-variant/50">search</span>
+                <input id="search-input" class="w-full bg-transparent border-b border-outline-variant/20 focus:border-primary focus:ring-0 pl-8 py-2 font-inter text-sm tracking-wide uppercase font-bold text-on-surface placeholder:text-on-surface-variant/40" placeholder="SEARCH SKILLS OR FRIENDS..."/>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="ml-72 p-12 min-h-screen">
+        <div class="max-w-[1400px] mx-auto">
+            <section class="mb-16 text-center lg:text-left">
+                <h2 class="text-6xl font-extrabold tracking-tighter text-on-surface mb-4">Find your<br/>Partner.</h2>
+                <p class="text-lg text-on-surface-variant max-w-xl leading-relaxed opacity-80">
+                    Connect with other developers and creators. Filter by expertise or search for specific skills.
+                </p>
+            </section>
+
+            <div class="grid grid-cols-12 gap-12">
+                <!-- Filters -->
+                <div class="col-span-3 space-y-12">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-6">Expertise Domains</h4>
+                        <div class="space-y-4">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20"/>
+                                <span class="text-sm font-medium">Frontend Development</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20"/>
+                                <span class="text-sm font-medium">Backend Systems</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20"/>
+                                <span class="text-sm font-medium">AI & Machine Learning</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="col-span-9">
+                    <div id="results-count" class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-8">Showing results</div>
+                    <div id="users-grid" class="grid grid-cols-2 gap-8">
+                        <!-- User cards will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const usersGrid = document.getElementById('users-grid');
+        const countEl = document.getElementById('results-count');
+
+        async function searchUsers(query = '') {
+            let request = supabaseClient
+                .from('profiles')
+                .select('*');
+            
+            if (query) {
+                // Search in full_name or skills array
+                request = request.or(`full_name.ilike.%${query}%,skills.cs.{${query}}`);
+            }
+
+            const { data, error } = await request;
+            
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            countEl.textContent = `Showing ${data.length} Results`;
+            usersGrid.innerHTML = data.map(user => `
+                <div class="bg-surface-container-lowest p-8 rounded-xl transition-all duration-300 hover:shadow-lg border-l-4 border-transparent hover:border-primary">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-16 h-16 rounded-lg overflow-hidden bg-slate-100">
+                            <img src="${user.avatar_url || 'https://via.placeholder.com/100'}" alt="Profile" class="w-full h-full object-cover"/>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold tracking-tight mb-2">${user.full_name}</h3>
+                    <p class="text-sm text-on-surface-variant mb-6 line-clamp-2">${user.bio || 'No bio provided.'}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${(user.skills || []).map(skill => `<span class="text-[10px] font-black uppercase tracking-widest text-primary px-2 py-1 bg-primary/5 rounded font-inter">${skill}</span>`).join('')}
+                    </div>
+                    <button onclick="startChat('${user.id}')" class="mt-6 w-full py-3 bg-primary-container text-white rounded font-bold text-xs uppercase tracking-widest hover:opacity-90">Message</button>
+                </div>
+            `).join('');
+        }
+
+        async function startChat(userId) {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) return;
+
+            // Check if chat exists or create new one
+            // This is a simplified logic
+            window.location.href = `chat.html?peer=${userId}`;
+        }
+
+        searchInput.addEventListener('input', (e) => searchUsers(e.target.value));
+        searchUsers();
+    </script>
+</body>
+</html>

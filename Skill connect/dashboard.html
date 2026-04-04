@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dashboard | SkillConnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#3d3b70",
+                        "surface": "#fdf8ff",
+                        "on-surface": "#1c1b1f",
+                        "primary-container": "#e2dfff",
+                        "on-primary-container": "#000000",
+                        "surface-container": "#f3edf7",
+                        "surface-container-high": "#ece6f0",
+                        "on-surface-variant": "#49454f"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-['Inter'] min-h-screen">
+    <nav class="border-b border-surface-container-high px-8 py-4 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-8">
+            <h1 class="text-2xl font-black italic tracking-tighter text-primary">SKILLCONNECT</h1>
+            <div class="hidden md:flex gap-6 text-sm font-bold tracking-tight uppercase text-on-surface-variant">
+                <a class="hover:text-primary transition-colors text-primary" href="dashboard.html">Home</a>
+                <a class="hover:text-primary transition-colors" href="search.html">Find Friends</a>
+                <a class="hover:text-primary transition-colors" href="chat.html">Messages</a>
+                <a class="hover:text-primary transition-colors" href="hackathons.html">Hackathons</a>
+                <a class="hover:text-primary transition-colors" href="profile.html">Profile</a>
+            </div>
+        </div>
+        <button id="logout-btn" class="text-sm font-bold uppercase tracking-widest hover:text-primary">Logout</button>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-8 py-12">
+        <header class="mb-16">
+            <h2 class="text-5xl font-black tracking-tighter mb-4">Welcome Back, <span id="user-name" class="text-primary">Explorer</span></h2>
+            <p class="text-xl text-on-surface-variant max-w-2xl font-medium leading-relaxed">
+                Your portal to collaboration, skill-sharing, and innovation. Discover your next partner today.
+            </p>
+        </header>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="group p-8 bg-surface-container rounded-3xl border border-transparent hover:border-primary/20 hover:bg-white transition-all duration-500 cursor-pointer" onclick="window.location.href='search.html'">
+                <div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary font-bold">search</span>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-3">Find Collaborators</h3>
+                <p class="text-on-surface-variant font-medium leading-relaxed mb-6">Connect with developers and researchers based on the skills you need.</p>
+                <div class="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                    Start Searching <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="group p-8 bg-surface-container rounded-3xl border border-transparent hover:border-primary/20 hover:bg-white transition-all duration-500 cursor-pointer" onclick="window.location.href='chat.html'">
+                <div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary font-bold">chat_bubble</span>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-3">Messages</h3>
+                <p class="text-on-surface-variant font-medium leading-relaxed mb-6">Stay in sync with your team and friends with real-time encrypted messaging.</p>
+                <div class="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                    Open Chats <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="group p-8 bg-surface-container rounded-3xl border border-transparent hover:border-primary/20 hover:bg-white transition-all duration-500 cursor-pointer" onclick="window.location.href='hackathons.html'">
+                <div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary font-bold">event</span>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-3">Hackathons</h3>
+                <p class="text-on-surface-variant font-medium leading-relaxed mb-6">Explore upcoming events to challenge your skills and build something great.</p>
+                <div class="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                    Explore Events <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script>
+        const logoutBtn = document.getElementById('logout-btn');
+        const userNameEl = document.getElementById('user-name');
+
+        async function initDashboard() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const { data: profile } = await supabaseClient
+                .from('profiles')
+                .select('full_name')
+                .eq('id', session.user.id)
+                .single();
+            
+            if (profile && profile.full_name) {
+                userNameEl.textContent = profile.full_name.split(' ')[0];
+            }
+        }
+
+        logoutBtn.addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'index.html';
+        });
+
+        initDashboard();
+    </script>
+</body>
+</html>

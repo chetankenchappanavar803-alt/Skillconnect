@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Skill Connect | The Future of Collaboration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#2a14b4",
+                        "primary-container": "#4338ca",
+                        "secondary": "#5a5893",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c7c4d7",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface-variant": "#464554",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-text-shadow {
+            text-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased overflow-hidden">
+    <div class="flex h-screen w-full">
+        <!-- Hero Area (Left Side) -->
+        <section class="hidden lg:flex lg:w-7/12 relative overflow-hidden bg-primary-container">
+            <div class="absolute inset-0 z-0">
+                <img class="w-full h-full object-cover opacity-60 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtm3z1uGU0eiGPoVHfxUg6UoiSq_hsB-aGyJMpOsGSlDRIRndGObnVvuGCa3tpJ8YWNjlsqUmqvuAKQmUEG6jUk1Y1kEqNhNGzdRqOrGbCxvRvJ9xaZe66WUucHGQ4uIkFmib_j7wizCpcUcXwlczEbCYbpTwXv2eV_30sZCLrcdLSCuSQkPBmbGcC0nkMWqBn916HYxJA8EkiNoNKO_otxOcO4jD8S8K1Dwouxghj7MuymW0o9b4QmW4eI3cKs_BSJ2ucmTGXMQ" alt="Collaboration"/>
+                <div class="absolute inset-0 bg-gradient-to-tr from-primary via-primary/40 to-transparent"></div>
+            </div>
+            <div class="relative z-10 w-full flex flex-col justify-between p-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-on-primary rounded flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">hub</span>
+                    </div>
+                    <span class="font-headline font-bold text-2xl tracking-tighter text-on-primary">SkillConnect</span>
+                </div>
+                <div class="max-w-xl">
+                    <h1 class="font-headline text-[5rem] leading-[1.05] font-extrabold text-on-primary tracking-tighter editorial-text-shadow mb-8">
+                        The Future of Collaboration.
+                    </h1>
+                    <p class="text-on-primary-container text-xl leading-relaxed font-medium opacity-90">
+                        Join an elite network of developers, creators, and thinkers. Connect through skills and build the next big thing.
+                    </p>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <div class="flex flex-col">
+                        <span class="text-on-primary text-3xl font-bold tracking-tight">5.2k+</span>
+                        <span class="text-on-primary-container text-xs uppercase tracking-widest font-bold">Active Users</span>
+                    </div>
+                    <div class="w-px h-10 bg-on-primary-container/20"></div>
+                    <div class="flex flex-col">
+                        <span class="text-on-primary text-3xl font-bold tracking-tight">1.2M</span>
+                        <span class="text-on-primary-container text-xs uppercase tracking-widest font-bold">Skills Shared</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Form Area (Right Side) -->
+        <main class="w-full lg:w-5/12 bg-surface-container-lowest flex items-center justify-center p-8 md:p-24 overflow-y-auto">
+            <div class="w-full max-w-md space-y-12">
+                <div class="space-y-4">
+                    <h2 class="text-4xl font-headline font-bold tracking-tight text-on-surface" id="auth-title">Welcome back</h2>
+                    <p class="text-on-surface-variant font-medium" id="auth-subtitle">Continue your journey with SkillConnect.</p>
+                </div>
+
+                <!-- Form Fields -->
+                <form id="auth-form" class="space-y-6">
+                    <div class="space-y-1.5" id="name-group" style="display: none;">
+                        <label class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1" for="full-name">Full Name</label>
+                        <input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-4 transition-all duration-300 placeholder:text-outline font-medium text-on-surface" id="full-name" placeholder="John Doe" type="text"/>
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1" for="email">Email Address</label>
+                        <input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-4 transition-all duration-300 placeholder:text-outline font-medium text-on-surface" id="email" required placeholder="name@example.com" type="email"/>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-center px-1">
+                            <label class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="password">Password</label>
+                            <a class="text-xs font-bold text-primary hover:opacity-80 transition-opacity" href="#" id="forgot-password">Forgotten?</a>
+                        </div>
+                        <input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-4 transition-all duration-300 placeholder:text-outline font-medium text-on-surface" id="password" required placeholder="••••••••" type="password"/>
+                    </div>
+                    <div class="flex items-center space-x-2 px-1">
+                        <input class="w-4 h-4 rounded text-primary border-outline-variant/50 focus:ring-primary/20" id="remember" type="checkbox"/>
+                        <label class="text-sm font-medium text-on-surface-variant" for="remember">Keep me authenticated</label>
+                    </div>
+                    <button id="submit-btn" class="w-full bg-primary-container text-on-primary py-5 rounded-lg font-bold tracking-wide shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300" type="submit">
+                        Access SkillConnect
+                    </button>
+                    <p id="message" class="text-center text-sm font-medium"></p>
+                </form>
+
+                <div class="pt-8 text-center">
+                    <p class="text-sm text-on-surface-variant font-medium">
+                        <span id="toggle-text">New to the community?</span> 
+                        <a class="text-primary font-bold ml-1 hover:underline underline-offset-4 decoration-2 cursor-pointer" id="toggle-auth">Create profile</a>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Decorative Top Edge -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary-container to-secondary z-50"></div>
+
+    <script src="js/config.js"></script>
+    <script>
+        const authForm = document.getElementById('auth-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const fullNameInput = document.getElementById('full-name');
+        const submitBtn = document.getElementById('submit-btn');
+        const toggleAuth = document.getElementById('toggle-auth');
+        const nameGroup = document.getElementById('name-group');
+        const authTitle = document.getElementById('auth-title');
+        const authSubtitle = document.getElementById('auth-subtitle');
+        const toggleText = document.getElementById('toggle-text');
+        const messageEl = document.getElementById('message');
+
+        let isLogin = true;
+
+        toggleAuth.addEventListener('click', () => {
+            isLogin = !isLogin;
+            if (isLogin) {
+                authTitle.textContent = 'Welcome back';
+                authSubtitle.textContent = 'Continue your journey with SkillConnect.';
+                nameGroup.style.display = 'none';
+                submitBtn.textContent = 'Access SkillConnect';
+                toggleText.textContent = 'New to the community?';
+                toggleAuth.textContent = 'Create profile';
+            } else {
+                authTitle.textContent = 'Join SkillConnect';
+                authSubtitle.textContent = 'Create your scholarly profile today.';
+                nameGroup.style.display = 'block';
+                submitBtn.textContent = 'Join the Network';
+                toggleText.textContent = 'Already a member?';
+                toggleAuth.textContent = 'Log in';
+            }
+            messageEl.textContent = '';
+        });
+
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const fullName = fullNameInput.value;
+
+            messageEl.textContent = 'Processing...';
+            messageEl.className = 'text-center text-sm font-medium text-primary';
+
+            try {
+                if (isLogin) {
+                    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    messageEl.textContent = 'Login successful! Redirecting...';
+                    messageEl.className = 'text-center text-sm font-medium text-green-600';
+                    setTimeout(() => window.location.href = 'dashboard.html', 1500);
+                } else {
+                    const { error } = await supabaseClient.auth.signUp({
+                        email,
+                        password,
+                        options: { data: { full_name: fullName } }
+                    });
+                    if (error) throw error;
+                    messageEl.textContent = 'Signup successful! Check email for verification.';
+                    messageEl.className = 'text-center text-sm font-medium text-green-600';
+                }
+            } catch (error) {
+                messageEl.textContent = error.message;
+                messageEl.className = 'text-center text-sm font-medium text-red-600';
+            }
+        });
+
+        async function checkSession() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) window.location.href = 'dashboard.html';
+        }
+        checkSession();
+    </script>
+</body>
+</html>
