@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Profile | Skill Connect</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#2a14b4",
+                        "primary-container": "#4338ca",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#464554",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+    <!-- Sidebar Navigation -->
+    <aside class="fixed left-0 top-0 h-full w-72 bg-slate-50/85 backdrop-blur-xl border-r border-slate-200/10 flex flex-col py-12 px-6 z-50">
+        <div class="mb-12">
+            <h1 class="text-2xl font-bold tracking-tighter text-indigo-800">SkillConnect</h1>
+            <p class="text-slate-500 font-inter tracking-tight text-sm font-medium mt-1">Empowering Collaboration</p>
+        </div>
+        <nav class="space-y-6">
+            <a class="flex items-center space-x-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="hackathons.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="font-inter tracking-tight text-lg font-medium">Hackathons</span>
+            </a>
+            <a class="flex items-center space-x-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="search.html">
+                <span class="material-symbols-outlined">search</span>
+                <span class="font-inter tracking-tight text-lg font-medium">Search</span>
+            </a>
+            <a class="flex items-center space-x-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="chat.html">
+                <span class="material-symbols-outlined">chat_bubble</span>
+                <span class="font-inter tracking-tight text-lg font-medium">Chat</span>
+            </a>
+            <a class="flex items-center space-x-3 text-indigo-700 font-semibold border-l-4 border-indigo-700 pl-4 transition-transform" href="profile.html">
+                <span class="material-symbols-outlined">person_outline</span>
+                <span class="font-inter tracking-tight text-lg font-medium">Profile</span>
+            </a>
+        </nav>
+        <div class="mt-auto">
+            <button id="logout-btn" class="w-full py-4 text-sm font-bold text-red-500 uppercase tracking-widest hover:bg-red-50 rounded-lg transition-colors">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-72 min-h-screen">
+        <header class="sticky top-0 w-full z-40 bg-white/80 backdrop-blur-md h-20 flex items-center px-12 border-b border-surface-variant/20">
+            <div class="flex items-center space-x-4 flex-1">
+                <span class="material-symbols-outlined text-slate-400">search</span>
+                <input class="bg-transparent border-none focus:ring-0 text-sm font-inter tracking-wide w-64" placeholder="Search SkillConnect..." type="text"/>
+            </div>
+        </header>
+
+        <div class="max-w-[1400px] mx-auto px-12 py-16">
+            <section class="mb-24 flex flex-col md:flex-row items-start gap-12">
+                <div class="relative">
+                    <div class="w-48 h-48 rounded-lg overflow-hidden bg-surface-container-low shadow-sm">
+                        <img id="profile-avatar" src="https://via.placeholder.com/200" alt="Avatar" class="w-full h-full object-cover"/>
+                    </div>
+                </div>
+                <div class="flex-1 space-y-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 id="profile-name" class="text-6xl font-extrabold tracking-tighter text-on-surface mb-2">Loading...</h2>
+                            <p id="profile-headline" class="text-xl text-primary font-medium tracking-tight">Active Collaborator</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <button id="edit-profile-btn" class="px-8 py-3 bg-surface-container-high text-on-surface font-bold text-sm tracking-wide uppercase hover:bg-surface-container-highest rounded-md">Edit Profile</button>
+                            <button id="write-review-btn" class="px-8 py-3 bg-primary-container text-on-primary font-bold text-sm tracking-wide uppercase hover:opacity-90 rounded-md">Write Review</button>
+                        </div>
+                    </div>
+                    <p id="profile-bio" class="text-lg leading-relaxed text-on-surface-variant max-w-3xl">Please wait while we fetch your profile data.</p>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-12 gap-16">
+                <div class="col-span-12 lg:col-span-7 space-y-20">
+                    <section>
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-8">Specialized Expertise</h3>
+                        <div id="skills-container" class="flex flex-wrap gap-3">
+                            <!-- Skills will be injected here -->
+                        </div>
+                    </section>
+                </div>
+                <div class="col-span-12 lg:col-span-5 space-y-12">
+                     <section class="bg-surface-container-low p-10 rounded-2xl">
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-6">User Stats</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-6 rounded-xl">
+                                <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Projects</p>
+                                <p id="stat-projects" class="text-2xl font-black">0</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl">
+                                <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Reviews</p>
+                                <p id="stat-reviews" class="text-2xl font-black">0</p>
+                            </div>
+                        </div>
+                     </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-lg p-8 shadow-2xl">
+            <h3 class="text-3xl font-black tracking-tighter mb-6 text-primary">Edit Profile</h3>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Full Name</label>
+                    <input id="edit-name" type="text" class="w-full bg-surface-container-low border-0 border-b-2 border-primary/20 focus:border-primary focus:ring-0 p-4 font-medium" placeholder="Your Name">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Short Bio</label>
+                    <textarea id="edit-bio" class="w-full bg-surface-container-low border-0 border-b-2 border-primary/20 focus:border-primary focus:ring-0 p-4 font-medium h-32" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Skills (Separate with commas)</label>
+                    <input id="edit-skills" type="text" class="w-full bg-surface-container-low border-0 border-b-2 border-primary/20 focus:border-primary focus:ring-0 p-4 font-medium" placeholder="Python, Design, AWS...">
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button id="cancel-edit" class="flex-1 px-8 py-4 bg-surface-container-high text-on-surface font-bold text-sm tracking-widest uppercase rounded-xl hover:bg-surface-container-highest transition-colors">Cancel</button>
+                    <button id="save-profile" class="flex-1 px-8 py-4 bg-primary text-on-primary font-bold text-sm tracking-widest uppercase rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl transition-all">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script>
+        const logoutBtn = document.getElementById('logout-btn');
+        const nameEl = document.getElementById('profile-name');
+        const bioEl = document.getElementById('profile-bio');
+        const skillsEl = document.getElementById('skills-container');
+        const writeReviewBtn = document.getElementById('write-review-btn');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const editModal = document.getElementById('edit-modal');
+        const cancelEdit = document.getElementById('cancel-edit');
+        const saveProfileBtn = document.getElementById('save-profile');
+        
+        const editName = document.getElementById('edit-name');
+        const editBio = document.getElementById('edit-bio');
+        const editSkills = document.getElementById('edit-skills');
+
+        let profileId = null;
+        let isOwner = false;
+
+        async function initProfile() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            profileId = urlParams.get('id') || session.user.id;
+            isOwner = profileId === session.user.id;
+
+            const { data: profile } = await supabaseClient
+                .from('profiles')
+                .select('*')
+                .eq('id', profileId)
+                .single();
+
+            if (profile) {
+                renderProfile(profile);
+            } else if (isOwner) {
+                // Initial profile creation if it doesn't exist
+                const { data: newProfile } = await supabaseClient
+                    .from('profiles')
+                    .upsert({ id: session.user.id, full_name: session.user.user_metadata.full_name })
+                    .select()
+                    .single();
+                if (newProfile) renderProfile(newProfile);
+            }
+
+            if (!isOwner) {
+                editProfileBtn.style.display = 'none';
+                writeReviewBtn.style.display = 'block';
+            } else {
+                writeReviewBtn.style.display = 'none';
+            }
+        }
+
+        function renderProfile(profile) {
+            nameEl.textContent = profile.full_name || 'Anonymous';
+            bioEl.textContent = profile.bio || 'This user has not provided a bio yet.';
+            
+            if (profile.skills && profile.skills.length > 0) {
+                skillsEl.innerHTML = profile.skills.map(skill => 
+                    `<span class="px-5 py-2 bg-surface-container-low text-on-surface-variant rounded-full text-sm font-medium">${skill.trim()}</span>`
+                ).join('');
+            } else {
+                skillsEl.innerHTML = '<p class="text-on-surface-variant/40 italic">No skills added yet.</p>';
+            }
+
+            // Fill edit fields
+            editName.value = profile.full_name || '';
+            editBio.value = profile.bio || '';
+            editSkills.value = profile.skills ? profile.skills.join(', ') : '';
+        }
+
+        editProfileBtn.addEventListener('click', () => editModal.classList.remove('hidden'));
+        cancelEdit.addEventListener('click', () => editModal.classList.add('hidden'));
+
+        saveProfileBtn.addEventListener('click', async () => {
+            const skillsArray = editSkills.value.split(',').map(s => s.trim()).filter(s => s.length > 0);
+            
+            const { error } = await supabaseClient
+                .from('profiles')
+                .update({
+                    full_name: editName.value,
+                    bio: editBio.value,
+                    skills: skillsArray
+                })
+                .eq('id', profileId);
+
+            if (error) {
+                alert(error.message);
+            } else {
+                editModal.classList.add('hidden');
+                initProfile();
+            }
+        });
+
+        writeReviewBtn.addEventListener('click', async () => {
+            const rating = prompt('Enter rating (1-5):');
+            const comment = prompt('Enter your review:');
+            if (rating && comment) {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                const { error } = await supabaseClient
+                    .from('reviews')
+                    .insert([{ reviewer_id: session.user.id, reviewee_id: profileId, rating: parseInt(rating), comment }]);
+                if (error) alert(error.message);
+                else alert('Review submitted!');
+            }
+        });
+
+        logoutBtn.addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'index.html';
+        });
+
+        initProfile();
+    </script>
+</body>
+</html>
