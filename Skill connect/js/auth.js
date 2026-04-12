@@ -82,4 +82,4 @@ async function checkSession() {
     }
 }
 
-checkSession();
+// checkSession(); // Removed to avoid potential redirect loops on load

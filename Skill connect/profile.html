@@ -12,21 +12,23 @@
         body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
     </style>
-    <script id="tailwind-config">
+        <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "primary": "#2a14b4",
-                        "primary-container": "#4338ca",
-                        "surface": "#f7f9fb",
-                        "on-surface": "#191c1e",
-                        "on-surface-variant": "#464554",
-                        "surface-container-low": "#f2f4f6",
-                        "surface-container-high": "#e6e8ea",
-                        "surface-container-highest": "#e0e3e5",
-                        "on-primary": "#ffffff",
+                        "primary": "#00d2ff",
+                        "surface": "#0a0a0a",
+                        "on-surface": "#ffffff",
+                        "primary-container": "#02313a",
+                        "on-primary-container": "#ffffff",
+                        "surface-container": "#111111",
+                        "surface-container-high": "#1a1a1a",
+                        "surface-container-lowest": "#000000",
+                        "surface-container-low": "#0d0d0d",
+                        "on-surface-variant": "#a3a3a3",
+                        "on-primary": "#000000"
                     }
                 }
             }
@@ -35,25 +37,25 @@
 </head>
 <body class="bg-surface text-on-surface">
     <!-- Sidebar Navigation -->
-    <aside class="fixed left-0 top-0 h-full w-72 bg-slate-50/85 backdrop-blur-xl border-r border-slate-200/10 flex flex-col py-12 px-6 z-50">
+    <aside class="fixed left-0 top-0 h-full w-72 bg-[#0a0a0a]/85 backdrop-blur-xl border-r border-white/10 flex flex-col py-12 px-6 z-50">
         <div class="mb-12">
-            <h1 class="text-2xl font-bold tracking-tighter text-indigo-800">SkillConnect</h1>
-            <p class="text-slate-500 font-inter tracking-tight text-sm font-medium mt-1">Empowering Collaboration</p>
+            <h1 class="text-2xl font-bold tracking-tighter text-primary">SkillConnect</h1>
+            <p class="text-on-surface-variant font-inter tracking-tight text-sm font-medium mt-1">Empowering Collaboration</p>
         </div>
         <nav class="space-y-6">
-            <a class="flex items-center space-x-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="hackathons.html">
+            <a class="flex items-center space-x-3 text-on-surface-variant pl-5 hover:translate-x-1 transition-transform" href="hackathons.html">
                 <span class="material-symbols-outlined">event_available</span>
                 <span class="font-inter tracking-tight text-lg font-medium">Hackathons</span>
             </a>
-            <a class="flex items-center space-x-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="search.html">
+            <a class="flex items-center space-x-3 text-on-surface-variant pl-5 hover:translate-x-1 transition-transform" href="search.html">
                 <span class="material-symbols-outlined">search</span>
                 <span class="font-inter tracking-tight text-lg font-medium">Search</span>
             </a>
-            <a class="flex items-center space-x-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="chat.html">
+            <a class="flex items-center space-x-3 text-on-surface-variant pl-5 hover:translate-x-1 transition-transform" href="chat.html">
                 <span class="material-symbols-outlined">chat_bubble</span>
                 <span class="font-inter tracking-tight text-lg font-medium">Chat</span>
             </a>
-            <a class="flex items-center space-x-3 text-indigo-700 font-semibold border-l-4 border-indigo-700 pl-4 transition-transform" href="profile.html">
+            <a class="flex items-center space-x-3 text-primary font-semibold border-l-4 border-primary pl-4 transition-transform" href="profile.html">
                 <span class="material-symbols-outlined">person_outline</span>
                 <span class="font-inter tracking-tight text-lg font-medium">Profile</span>
             </a>
@@ -65,9 +67,9 @@
 
     <!-- Main Content -->
     <main class="ml-72 min-h-screen">
-        <header class="sticky top-0 w-full z-40 bg-white/80 backdrop-blur-md h-20 flex items-center px-12 border-b border-surface-variant/20">
+        <header class="sticky top-0 w-full z-40 bg-[#0a0a0a]/80 backdrop-blur-md h-20 flex items-center px-12 border-b border-surface-variant/20">
             <div class="flex items-center space-x-4 flex-1">
-                <span class="material-symbols-outlined text-slate-400">search</span>
+                <span class="material-symbols-outlined text-on-surface-variant">search</span>
                 <input class="bg-transparent border-none focus:ring-0 text-sm font-inter tracking-wide w-64" placeholder="Search SkillConnect..." type="text"/>
             </div>
         </header>
@@ -107,11 +109,11 @@
                      <section class="bg-surface-container-low p-10 rounded-2xl">
                         <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-6">User Stats</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-white p-6 rounded-xl">
+                            <div class="bg-surface-container p-6 rounded-xl">
                                 <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Projects</p>
                                 <p id="stat-projects" class="text-2xl font-black">0</p>
                             </div>
-                            <div class="bg-white p-6 rounded-xl">
+                            <div class="bg-surface-container p-6 rounded-xl">
                                 <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Reviews</p>
                                 <p id="stat-reviews" class="text-2xl font-black">0</p>
                             </div>
@@ -124,7 +126,7 @@
 
     <!-- Edit Profile Modal -->
     <div id="edit-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-lg p-8 shadow-2xl">
+        <div class="bg-surface-container rounded-3xl w-full max-w-lg p-8 shadow-2xl">
             <h3 class="text-3xl font-black tracking-tighter mb-6 text-primary">Edit Profile</h3>
             <div class="space-y-6">
                 <div>

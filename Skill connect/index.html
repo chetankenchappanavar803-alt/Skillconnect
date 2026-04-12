@@ -51,86 +51,91 @@
         }
     </style>
 </head>
-<body class="bg-surface font-body text-on-surface antialiased overflow-hidden">
-    <div class="flex h-screen w-full">
-        <!-- Hero Area (Left Side) -->
-        <section class="hidden lg:flex lg:w-7/12 relative overflow-hidden bg-primary-container">
-            <div class="absolute inset-0 z-0">
-                <img class="w-full h-full object-cover opacity-60 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtm3z1uGU0eiGPoVHfxUg6UoiSq_hsB-aGyJMpOsGSlDRIRndGObnVvuGCa3tpJ8YWNjlsqUmqvuAKQmUEG6jUk1Y1kEqNhNGzdRqOrGbCxvRvJ9xaZe66WUucHGQ4uIkFmib_j7wizCpcUcXwlczEbCYbpTwXv2eV_30sZCLrcdLSCuSQkPBmbGcC0nkMWqBn916HYxJA8EkiNoNKO_otxOcO4jD8S8K1Dwouxghj7MuymW0o9b4QmW4eI3cKs_BSJ2ucmTGXMQ" alt="Collaboration"/>
-                <div class="absolute inset-0 bg-gradient-to-tr from-primary via-primary/40 to-transparent"></div>
-            </div>
-            <div class="relative z-10 w-full flex flex-col justify-between p-20">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-on-primary rounded flex items-center justify-center">
-                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">hub</span>
-                    </div>
-                    <span class="font-headline font-bold text-2xl tracking-tighter text-on-primary">SkillConnect</span>
-                </div>
-                <div class="max-w-xl">
-                    <h1 class="font-headline text-[5rem] leading-[1.05] font-extrabold text-on-primary tracking-tighter editorial-text-shadow mb-8">
-                        The Future of Collaboration.
-                    </h1>
-                    <p class="text-on-primary-container text-xl leading-relaxed font-medium opacity-90">
-                        Join an elite network of developers, creators, and thinkers. Connect through skills and build the next big thing.
-                    </p>
-                </div>
-                <div class="flex items-center space-x-8">
-                    <div class="flex flex-col">
-                        <span class="text-on-primary text-3xl font-bold tracking-tight">5.2k+</span>
-                        <span class="text-on-primary-container text-xs uppercase tracking-widest font-bold">Active Users</span>
-                    </div>
-                    <div class="w-px h-10 bg-on-primary-container/20"></div>
-                    <div class="flex flex-col">
-                        <span class="text-on-primary text-3xl font-bold tracking-tight">1.2M</span>
-                        <span class="text-on-primary-container text-xs uppercase tracking-widest font-bold">Skills Shared</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+<body class="bg-[#0a0a0a] font-body text-white antialiased overflow-hidden">
+    <div class="h-screen w-full relative flex items-center">
+        <!-- 3D Area (Right Side) -->
+        <div class="absolute inset-y-0 right-0 lg:-translate-x-12 w-full lg:w-[65%] z-0">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script>
+            <spline-viewer id="hero-3d" loading-anim-type="spinner" url="https://prod.spline.design/ptApabdmm1VeShHH/scene.splinecode" class="w-full h-full object-cover"></spline-viewer>
+            <!-- Gradient to smoothly blend the left side into the 3D scene -->
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent pointer-events-none"></div>
+        </div>
 
-        <!-- Login Form Area (Right Side) -->
-        <main class="w-full lg:w-5/12 bg-surface-container-lowest flex items-center justify-center p-8 md:p-24 overflow-y-auto">
-            <div class="w-full max-w-md space-y-12">
-                <div class="space-y-4">
-                    <h2 class="text-4xl font-headline font-bold tracking-tight text-on-surface" id="auth-title">Welcome back</h2>
-                    <p class="text-on-surface-variant font-medium" id="auth-subtitle">Continue your journey with SkillConnect.</p>
+        <!-- Hero Content Area (Left Side) -->
+        <main class="relative z-10 w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-24 pointer-events-none">
+            <div class="space-y-6 pointer-events-auto">
+                <div class="flex items-center space-x-3 mb-10">
+                    <div class="w-10 h-10 bg-white/5 rounded flex items-center justify-center border border-white/10 backdrop-blur-sm">
+                        <span class="material-symbols-outlined text-[#00d2ff]" style="font-variation-settings: 'FILL' 1;">hub</span>
+                    </div>
+                    <span class="font-headline font-bold text-xl tracking-wider text-white uppercase">SkillConnect</span>
                 </div>
-
-                <!-- Form Fields -->
-                <form id="auth-form" class="space-y-6">
-                    <div class="space-y-1.5" id="name-group" style="display: none;">
-                        <label class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1" for="full-name">Full Name</label>
-                        <input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-4 transition-all duration-300 placeholder:text-outline font-medium text-on-surface" id="full-name" placeholder="John Doe" type="text"/>
-                    </div>
-                    <div class="space-y-1.5">
-                        <label class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1" for="email">Email Address</label>
-                        <input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-4 transition-all duration-300 placeholder:text-outline font-medium text-on-surface" id="email" required placeholder="name@example.com" type="email"/>
-                    </div>
-                    <div class="space-y-1.5">
-                        <div class="flex justify-between items-center px-1">
-                            <label class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="password">Password</label>
-                            <a class="text-xs font-bold text-primary hover:opacity-80 transition-opacity" href="#" id="forgot-password">Forgotten?</a>
-                        </div>
-                        <input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-4 transition-all duration-300 placeholder:text-outline font-medium text-on-surface" id="password" required placeholder="••••••••" type="password"/>
-                    </div>
-                    <div class="flex items-center space-x-2 px-1">
-                        <input class="w-4 h-4 rounded text-primary border-outline-variant/50 focus:ring-primary/20" id="remember" type="checkbox"/>
-                        <label class="text-sm font-medium text-on-surface-variant" for="remember">Keep me authenticated</label>
-                    </div>
-                    <button id="submit-btn" class="w-full bg-primary-container text-on-primary py-5 rounded-lg font-bold tracking-wide shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300" type="submit">
-                        Access SkillConnect
+                
+                <h1 class="font-headline text-[3.5rem] lg:text-[5rem] leading-[1.05] font-medium tracking-tight">
+                    <span class="text-white block">Effortless</span>
+                    <span class="text-white block">Collaboration</span>
+                    <span class="text-[#00d2ff] block">for developers</span>
+                </h1>
+                
+                <p class="text-gray-400 text-lg leading-relaxed max-w-md pt-4 font-light">
+                    No extra setup, just smart networking when you need it.<br/>
+                    Handle the heavy lifting while you stay in control.
+                </p>
+                
+                <div class="pt-8 block">
+                    <button id="open-modal-btn" class="bg-[#02313a] text-[#00d2ff] border border-[transparent] px-8 py-3.5 rounded font-medium tracking-wide hover:bg-[#034450] transition-colors duration-300">
+                        JOIN US NOW
                     </button>
-                    <p id="message" class="text-center text-sm font-medium"></p>
-                </form>
-
-                <div class="pt-8 text-center">
-                    <p class="text-sm text-on-surface-variant font-medium">
-                        <span id="toggle-text">New to the community?</span> 
-                        <a class="text-primary font-bold ml-1 hover:underline underline-offset-4 decoration-2 cursor-pointer" id="toggle-auth">Create profile</a>
-                    </p>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Auth Modal Overlay -->
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex-col items-center justify-center p-4">
+        <button id="close-modal-btn" class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
+            <span class="material-symbols-outlined" style="font-size: 32px;">close</span>
+        </button>
+
+        <div class="w-full max-w-md bg-[#0f0f0f] border border-white/10 rounded-2xl p-10 space-y-10 shadow-2xl relative z-10">
+            <div class="space-y-2">
+                <h2 class="text-3xl font-headline font-medium tracking-tight text-white" id="auth-title">Welcome back</h2>
+                <p class="text-gray-400 text-sm font-light" id="auth-subtitle">Continue your journey with SkillConnect.</p>
+            </div>
+
+            <form id="auth-form" class="space-y-5">
+                <div class="space-y-1.5" id="name-group" style="display: none;">
+                    <label class="block font-label text-xs uppercase tracking-widest text-gray-500 font-medium" for="full-name">Full Name</label>
+                    <input class="w-full bg-[#1a1a1a] border border-white/5 focus:border-[#00d2ff]/50 focus:ring-0 rounded px-4 py-3 text-white placeholder-gray-600 transition-colors" id="full-name" placeholder="John Doe" type="text"/>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block font-label text-xs uppercase tracking-widest text-gray-500 font-medium" for="email">Email Address</label>
+                    <input class="w-full bg-[#1a1a1a] border border-white/5 focus:border-[#00d2ff]/50 focus:ring-0 rounded px-4 py-3 text-white placeholder-gray-600 transition-colors" id="email" required placeholder="name@example.com" type="email"/>
+                </div>
+                <div class="space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <label class="block font-label text-xs uppercase tracking-widest text-gray-500 font-medium" for="password">Password</label>
+                        <a class="text-xs text-[#00d2ff] hover:text-[#00d2ff]/80 font-medium transition-colors" href="#" id="forgot-password">Forgotten?</a>
+                    </div>
+                    <input class="w-full bg-[#1a1a1a] border border-white/5 focus:border-[#00d2ff]/50 focus:ring-0 rounded px-4 py-3 text-white placeholder-gray-600 transition-colors" id="password" required placeholder="••••••••" type="password"/>
+                </div>
+                <div class="flex items-center space-x-2 pt-2">
+                    <input class="w-4 h-4 rounded bg-[#1a1a1a] border-white/10 text-[#00d2ff] focus:ring-[#00d2ff]/20" id="remember" type="checkbox"/>
+                    <label class="text-sm text-gray-400 font-light" for="remember">Keep me authenticated</label>
+                </div>
+                <button id="submit-btn" class="w-full bg-[#00d2ff] text-black py-3.5 rounded font-medium tracking-wide mt-2 hover:bg-[#00b8e6] transition-colors" type="submit">
+                    Access SkillConnect
+                </button>
+                <p id="message" class="text-center text-sm font-medium mt-4"></p>
+            </form>
+
+            <div class="text-center border-t border-white/10 pt-6">
+                <p class="text-sm text-gray-400 font-light">
+                    <span id="toggle-text">New to the community?</span> 
+                    <a class="text-[#00d2ff] font-medium ml-1 cursor-pointer hover:text-white transition-colors" id="toggle-auth">Create profile</a>
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Decorative Top Edge -->
@@ -138,6 +143,10 @@
 
     <script src="js/config.js"></script>
     <script>
+        const authModal = document.getElementById('auth-modal');
+        const openModalBtn = document.getElementById('open-modal-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        
         const authForm = document.getElementById('auth-form');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -151,6 +160,16 @@
         const messageEl = document.getElementById('message');
 
         let isLogin = true;
+
+        openModalBtn.addEventListener('click', () => {
+            authModal.classList.remove('hidden');
+            authModal.classList.add('flex');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            authModal.classList.add('hidden');
+            authModal.classList.remove('flex');
+        });
 
         toggleAuth.addEventListener('click', () => {
             isLogin = !isLogin;
