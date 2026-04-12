@@ -14,19 +14,23 @@
         .chat-scroll::-webkit-scrollbar { width: 4px; }
         .chat-scroll::-webkit-scrollbar-thumb { background: #e0e3e5; border-radius: 10px; }
     </style>
-    <script id="tailwind-config">
+        <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "primary": "#2a14b4",
-                        "primary-container": "#4338ca",
-                        "surface": "#f7f9fb",
-                        "on-surface": "#191c1e",
-                        "on-surface-variant": "#464554",
-                        "surface-container-low": "#f2f4f6",
-                        "surface-container-lowest": "#ffffff",
+                        "primary": "#00d2ff",
+                        "surface": "#0a0a0a",
+                        "on-surface": "#ffffff",
+                        "primary-container": "#02313a",
+                        "on-primary-container": "#ffffff",
+                        "surface-container": "#111111",
+                        "surface-container-high": "#1a1a1a",
+                        "surface-container-lowest": "#000000",
+                        "surface-container-low": "#0d0d0d",
+                        "on-surface-variant": "#a3a3a3",
+                        "on-primary": "#000000"
                     }
                 }
             }
@@ -35,24 +39,24 @@
 </head>
 <body class="bg-surface text-on-surface overflow-hidden h-screen flex">
     <!-- Sidebar -->
-    <aside class="fixed left-0 top-0 h-full w-72 bg-slate-50/85 backdrop-blur-xl border-r border-slate-200/10 flex flex-col py-12 px-6 z-50">
+    <aside class="fixed left-0 top-0 h-full w-72 bg-[#0a0a0a]/85 backdrop-blur-xl border-r border-white/10 flex flex-col py-12 px-6 z-50">
         <div class="mb-12">
-            <h1 class="text-2xl font-bold tracking-tighter text-indigo-800">SkillConnect</h1>
+            <h1 class="text-2xl font-bold tracking-tighter text-primary">SkillConnect</h1>
         </div>
         <nav class="flex flex-col gap-y-2">
-            <a class="flex items-center gap-4 py-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="hackathons.html">
+            <a class="flex items-center gap-4 py-3 text-on-surface-variant pl-5 hover:translate-x-1 transition-transform" href="hackathons.html">
                 <span class="material-symbols-outlined">event_available</span>
                 <span>Hackathons</span>
             </a>
-            <a class="flex items-center gap-4 py-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="search.html">
+            <a class="flex items-center gap-4 py-3 text-on-surface-variant pl-5 hover:translate-x-1 transition-transform" href="search.html">
                 <span class="material-symbols-outlined">search</span>
                 <span>Search</span>
             </a>
-            <a class="flex items-center gap-4 py-3 text-indigo-700 font-semibold border-l-4 border-indigo-700 pl-4" href="chat.html">
+            <a class="flex items-center gap-4 py-3 text-primary font-semibold border-l-4 border-primary pl-4" href="chat.html">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
                 <span>Chat</span>
             </a>
-            <a class="flex items-center gap-4 py-3 text-slate-500 pl-5 hover:translate-x-1 transition-transform" href="profile.html">
+            <a class="flex items-center gap-4 py-3 text-on-surface-variant pl-5 hover:translate-x-1 transition-transform" href="profile.html">
                 <span class="material-symbols-outlined">person_outline</span>
                 <span>Profile</span>
             </a>
@@ -60,11 +64,11 @@
     </aside>
 
     <!-- Main Chat Area -->
-    <main class="ml-72 flex-1 flex flex-col h-full bg-white relative">
-        <header class="sticky top-0 w-full z-40 bg-white/80 backdrop-blur-md h-20 flex justify-between items-center px-12 border-b border-surface-variant/20">
+    <main class="ml-72 flex-1 flex flex-col h-full bg-surface-container relative">
+        <header class="sticky top-0 w-full z-40 bg-[#0a0a0a]/80 backdrop-blur-md h-20 flex justify-between items-center px-12 border-b border-surface-variant/20">
             <div class="flex flex-col">
                 <h2 id="chat-title" class="text-xl font-bold tracking-tight text-primary">Messages</h2>
-                <p id="chat-status" class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Select a conversation</p>
+                <p id="chat-status" class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Select a conversation</p>
             </div>
             <div class="flex items-center gap-6">
                 <button id="add-member-btn" class="hidden flex items-center gap-1 text-primary font-bold text-sm tracking-wide uppercase hover:opacity-80">
@@ -86,17 +90,17 @@
             </div>
 
             <!-- Chat History (Right Sub-pane) -->
-            <div class="flex-1 flex flex-col h-full bg-white">
+            <div class="flex-1 flex flex-col h-full bg-surface-container">
                 <div id="messages-container" class="flex-1 overflow-y-auto p-12 space-y-8 chat-scroll">
                     <!-- Messages injected here -->
-                    <div class="flex flex-col items-center justify-center h-full text-slate-400">
+                    <div class="flex flex-col items-center justify-center h-full text-on-surface-variant">
                         <span class="material-symbols-outlined text-6xl mb-4">forum</span>
                         <p>No conversation selected.</p>
                     </div>
                 </div>
 
                 <!-- Input -->
-                <footer class="p-8 bg-white border-t border-surface-variant/10">
+                <footer class="p-8 bg-surface-container border-t border-surface-variant/10">
                     <div class="max-w-4xl mx-auto">
                         <form id="message-form" class="relative flex items-center group">
                             <input id="message-input" class="w-full bg-surface-container-low border-none rounded-full py-5 pl-12 pr-20 focus:ring-2 focus:ring-primary/20" placeholder="Type a message..."/>
@@ -112,14 +116,14 @@
 
     <!-- Group Modal -->
     <div id="group-modal" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center">
-        <div class="bg-white p-8 rounded-2xl w-96 max-h-[80vh] flex flex-col">
+        <div class="bg-surface-container p-8 rounded-2xl w-96 max-h-[80vh] flex flex-col">
             <h3 class="text-lg font-bold mb-4">Create New Group</h3>
             <input id="group-name-input" class="w-full mb-4 p-3 border rounded-lg" placeholder="Group Name"/>
             <div id="group-member-list" class="flex-1 overflow-y-auto mb-4 space-y-2 chat-scroll">
                 <!-- User checkboxes injected here -->
             </div>
             <div class="flex justify-end gap-2">
-                <button id="cancel-group" class="px-4 py-2 text-slate-500">Cancel</button>
+                <button id="cancel-group" class="px-4 py-2 text-on-surface-variant">Cancel</button>
                 <button id="confirm-create-group-btn" class="px-4 py-2 bg-primary text-white rounded-lg">Create</button>
             </div>
         </div>
@@ -127,13 +131,13 @@
 
     <!-- Add Member Modal -->
     <div id="add-member-modal" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center">
-        <div class="bg-white p-8 rounded-2xl w-96 max-h-[80vh] flex flex-col">
+        <div class="bg-surface-container p-8 rounded-2xl w-96 max-h-[80vh] flex flex-col">
             <h3 class="text-lg font-bold mb-4">Add Members</h3>
             <div id="add-member-list" class="flex-1 overflow-y-auto mb-4 space-y-2 chat-scroll">
                 <!-- User checkboxes injected here -->
             </div>
             <div class="flex justify-end gap-2">
-                <button id="cancel-add-member" class="px-4 py-2 text-slate-500">Cancel</button>
+                <button id="cancel-add-member" class="px-4 py-2 text-on-surface-variant">Cancel</button>
                 <button id="confirm-add-member-btn" class="px-4 py-2 bg-primary text-white rounded-lg">Add</button>
             </div>
         </div>
@@ -198,7 +202,7 @@
 
         async function fetchProfilesForModal(containerId) {
             const container = document.getElementById(containerId);
-            container.innerHTML = '<p class="text-sm text-slate-400">Loading users...</p>';
+            container.innerHTML = '<p class="text-sm text-on-surface-variant">Loading users...</p>';
             const { data: profiles } = await supabaseClient.from('profiles').select('id, full_name').neq('id', currentUser.id);
             
             if (profiles) {
@@ -298,9 +302,9 @@
 
             if (participations) {
                 chatsList.innerHTML = participations.map(p => `
-                    <div onclick="selectChat('${p.chats.id}', '${p.chats.name || 'Private Chat'}', ${p.chats.is_group})" class="p-4 bg-white rounded-xl shadow-sm cursor-pointer border-l-4 border-transparent hover:border-primary transition-all">
+                    <div onclick="selectChat('${p.chats.id}', '${p.chats.name || 'Private Chat'}', ${p.chats.is_group})" class="p-4 bg-surface-container rounded-xl shadow-sm cursor-pointer border-l-4 border-transparent hover:border-primary transition-all">
                         <h3 class="font-bold truncate">${p.chats.name || 'Private Chat'}</h3>
-                        <p class="text-xs text-slate-400">Click to open</p>
+                        <p class="text-xs text-on-surface-variant">Click to open</p>
                     </div>
                 `).join('');
             }
@@ -339,7 +343,7 @@
                         <div class="${isSelf ? 'bg-primary-container text-white' : 'bg-surface-container-low text-on-surface'} p-5 rounded-3xl max-w-sm">
                             ${msg.content}
                         </div>
-                        <span class="text-[10px] text-slate-400 mt-1">${new Date(msg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        <span class="text-[10px] text-on-surface-variant mt-1">${new Date(msg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
                 </div>
             `;
