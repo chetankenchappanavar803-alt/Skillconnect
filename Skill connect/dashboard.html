@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dashboard | SkillConnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00d2ff",
+                        "surface": "#0a0a0a",
+                        "on-surface": "#ffffff",
+                        "primary-container": "#02313a",
+                        "on-primary-container": "#ffffff",
+                        "surface-container": "#111111",
+                        "surface-container-high": "#1a1a1a",
+                        "on-surface-variant": "#a3a3a3"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-['Inter'] min-h-screen overflow-hidden">
+
+    <nav class="border-b border-surface-container-high px-8 py-4 flex justify-between items-center bg-[#0a0a0a]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-8">
+            <h1 class="text-2xl font-black italic tracking-tighter text-primary">SKILLCONNECT</h1>
+            <div class="hidden md:flex gap-6 text-sm font-bold tracking-tight uppercase text-on-surface-variant">
+                <a class="hover:text-primary transition-colors text-primary" href="dashboard.html">Home</a>
+                <a class="hover:text-primary transition-colors" href="search.html">Find Friends</a>
+                <a class="hover:text-primary transition-colors" href="chat.html">Messages</a>
+                <a class="hover:text-primary transition-colors" href="hackathons.html">Hackathons</a>
+                <a class="hover:text-primary transition-colors" href="profile.html">Profile</a>
+            </div>
+        </div>
+        <button id="logout-btn" class="text-sm font-bold uppercase tracking-widest hover:text-primary">Logout</button>
+    </nav>
+
+    <!-- Full-screen Split Container -->
+    <div class="w-full relative flex h-[calc(100vh-73px)] overflow-hidden">
+        
+        <!-- 3D Area (Right Side) - INTERACTIVE -->
+        <div class="absolute inset-y-0 right-0 lg:-translate-x-12 w-full lg:w-[65%] z-0">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script>
+            <spline-viewer url="https://prod.spline.design/ptApabdmm1VeShHH/scene.splinecode" class="w-full h-full object-cover"></spline-viewer>
+            <!-- Gradient to blend into the left side -->
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent pointer-events-none"></div>
+            <!-- Bottom fade gradient -->
+            <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none"></div>
+        </div>
+
+        <!-- Scrollable Content Area (Left Side) -->
+        <main class="relative z-10 w-full lg:w-1/2 p-8 md:p-12 overflow-y-auto h-full chat-scroll pb-32">
+            <header class="mb-12">
+                <h2 class="text-5xl font-black tracking-tighter mb-4">Welcome Back,<br/><span id="user-name" class="text-primary">Explorer</span></h2>
+                <p class="text-xl text-on-surface-variant max-w-2xl font-medium leading-relaxed">
+                    Your portal to collaboration, skill-sharing, and innovation. Discover your next partner today.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 gap-6 max-w-md">
+            <!-- Card 1 -->
+            <div class="group p-8 bg-surface-container rounded-3xl border border-transparent hover:border-primary/20 hover:bg-[#1a1a1a] transition-all duration-500 cursor-pointer" onclick="window.location.href='search.html'">
+                <div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary font-bold">search</span>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-3">Find Collaborators</h3>
+                <p class="text-on-surface-variant font-medium leading-relaxed mb-6">Connect with developers and researchers based on the skills you need.</p>
+                <div class="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                    Start Searching <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="group p-8 bg-surface-container rounded-3xl border border-transparent hover:border-primary/20 hover:bg-[#1a1a1a] transition-all duration-500 cursor-pointer" onclick="window.location.href='chat.html'">
+                <div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary font-bold">chat_bubble</span>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-3">Messages</h3>
+                <p class="text-on-surface-variant font-medium leading-relaxed mb-6">Stay in sync with your team and friends with real-time encrypted messaging.</p>
+                <div class="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                    Open Chats <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="group p-8 bg-surface-container rounded-3xl border border-transparent hover:border-primary/20 hover:bg-[#1a1a1a] transition-all duration-500 cursor-pointer" onclick="window.location.href='hackathons.html'">
+                <div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary font-bold">event</span>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight mb-3">Hackathons</h3>
+                <p class="text-on-surface-variant font-medium leading-relaxed mb-6">Explore upcoming events to challenge your skills and build something great.</p>
+                <div class="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                    Explore Events <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </div>
+            </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script>
+        const logoutBtn = document.getElementById('logout-btn');
+        const userNameEl = document.getElementById('user-name');
+
+        async function initDashboard() {
+            let sessionFound = false;
+
+            if (window.location.hash.includes('error=')) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                const errorDesc = params.get('error_description') || params.get('error');
+                alert('CRITICAL GOOGLE AUTH ERROR:\n' + errorDesc.replace(/\+/g, ' '));
+                // Do not redirect, let them read the error
+                return;
+            }
+
+            // Wait for Supabase to announce the session
+            supabaseClient.auth.onAuthStateChange(async (event, session) => {
+                if (session && !sessionFound) {
+                    sessionFound = true;
+                    await loadProfile(session);
+                }
+            });
+
+            // Fallback check in case the event already fired or there's an existing session
+            try {
+                const { data } = await supabaseClient.auth.getSession();
+                if (data.session && !sessionFound) {
+                    sessionFound = true;
+                    await loadProfile(data.session);
+                } else if (!data.session) {
+                    // Only redirect out if we waited a moment and still have no session
+                    setTimeout(() => {
+                        if (!sessionFound) {
+                            console.error('No session found. Redirecting to home.');
+                            window.location.replace('index.html');
+                        }
+                    }, 1500); // 1.5 second grace period
+                }
+            } catch (err) {
+                console.error('Unexpected init error:', err);
+            }
+        }
+
+        async function loadProfile(session) {
+            try {
+                // Try to fetch profile
+
+                // Try to fetch profile
+                const { data: profile, error: fetchError } = await supabaseClient
+                    .from('profiles')
+                    .select('full_name')
+                    .eq('id', session.user.id)
+                    .single();
+                
+                if (fetchError && fetchError.code === 'PGRST116') {
+                    // Profile doesn't exist, create it from auth metadata
+                    const fullName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'Explorer';
+                    await supabaseClient
+                        .from('profiles')
+                        .insert([{ id: session.user.id, full_name: fullName }]);
+                    userNameEl.textContent = fullName.split(' ')[0];
+                } else if (profile && profile.full_name) {
+                    userNameEl.textContent = profile.full_name.split(' ')[0];
+                } else if (fetchError) {
+                    console.error('Fetch error:', fetchError);
+                }
+            } catch (err) {
+                console.error('Unexpected error:', err);
+                if (err.message.includes('fetch')) {
+                    alert('Network error: Failed to fetch data from Supabase. Check your connection or Supabase URL.');
+                }
+            }
+        }
+
+        logoutBtn.addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'index.html';
+        });
+
+        initDashboard();
+    </script>
+</body>
+</html>

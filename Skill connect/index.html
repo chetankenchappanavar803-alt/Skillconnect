@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Skill Connect | The Future of Collaboration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#2a14b4",
+                        "primary-container": "#4338ca",
+                        "secondary": "#5a5893",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c7c4d7",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface-variant": "#464554",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-text-shadow {
+            text-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] font-body text-white antialiased overflow-hidden">
+    <div class="h-screen w-full relative flex items-center">
+        <!-- 3D Full Background -->
+        <div class="fixed inset-0 w-full h-full z-0 pointer-events-none">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script>
+            <spline-viewer id="hero-3d" loading-anim-type="spinner" url="https://prod.spline.design/IHYYsPUtc-zifUmv/scene.splinecode" class="w-full h-full object-cover" events-target="global"></spline-viewer>
+            <!-- Overlay to ensure text readability while seeing the whole scene -->
+            <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+        </div>
+
+        <!-- Hero Content Area (Left Side) -->
+        <main class="relative z-10 w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-24 pointer-events-none">
+            <div class="space-y-6 pointer-events-auto">
+                <div class="flex items-center space-x-3 mb-10">
+                    <div class="w-10 h-10 bg-white/5 rounded flex items-center justify-center border border-white/10 backdrop-blur-sm">
+                        <span class="material-symbols-outlined text-[#00d2ff]" style="font-variation-settings: 'FILL' 1;">hub</span>
+                    </div>
+                    <span class="font-headline font-bold text-xl tracking-wider text-white uppercase">SkillConnect</span>
+                </div>
+                
+                <h1 class="font-headline text-[3.5rem] lg:text-[5rem] leading-[1.05] font-medium tracking-tight">
+                    <span class="text-white block">Effortless</span>
+                    <span class="text-white block">Collaboration</span>
+                    <span class="text-[#00d2ff] block">for developers</span>
+                </h1>
+                
+                <p class="text-gray-400 text-lg leading-relaxed max-w-md pt-4 font-light">
+                    No extra setup, just smart networking when you need it.<br/>
+                    Handle the heavy lifting while you stay in control.
+                </p>
+                
+                <div class="pt-8 block">
+                    <button id="open-modal-btn" class="bg-[#02313a] text-[#00d2ff] border border-[transparent] px-8 py-3.5 rounded font-medium tracking-wide hover:bg-[#034450] transition-colors duration-300">
+                        JOIN US NOW
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Auth Modal Overlay -->
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex-col items-center justify-center p-4">
+        <button id="close-modal-btn" class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
+            <span class="material-symbols-outlined" style="font-size: 32px;">close</span>
+        </button>
+
+        <div class="w-full max-w-md bg-[#0f0f0f] border border-white/10 rounded-2xl p-10 space-y-10 shadow-2xl relative z-10">
+            <div class="space-y-2">
+                <h2 class="text-3xl font-headline font-medium tracking-tight text-white" id="auth-title">Welcome back</h2>
+                <p class="text-gray-400 text-sm font-light" id="auth-subtitle">Continue your journey with SkillConnect.</p>
+            </div>
+
+            <form id="auth-form" class="space-y-5">
+                <div class="space-y-1.5" id="name-group" style="display: none;">
+                    <label class="block font-label text-xs uppercase tracking-widest text-gray-500 font-medium" for="full-name">Full Name</label>
+                    <input class="w-full bg-[#1a1a1a] border border-white/5 focus:border-[#00d2ff]/50 focus:ring-0 rounded px-4 py-3 text-white placeholder-gray-600 transition-colors" id="full-name" placeholder="John Doe" type="text"/>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block font-label text-xs uppercase tracking-widest text-gray-500 font-medium" for="email">Email Address</label>
+                    <input class="w-full bg-[#1a1a1a] border border-white/5 focus:border-[#00d2ff]/50 focus:ring-0 rounded px-4 py-3 text-white placeholder-gray-600 transition-colors" id="email" required placeholder="name@example.com" type="email"/>
+                </div>
+                <div class="space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <label class="block font-label text-xs uppercase tracking-widest text-gray-500 font-medium" for="password">Password</label>
+                        <a class="text-xs text-[#00d2ff] hover:text-[#00d2ff]/80 font-medium transition-colors" href="#" id="forgot-password">Forgotten?</a>
+                    </div>
+                    <input class="w-full bg-[#1a1a1a] border border-white/5 focus:border-[#00d2ff]/50 focus:ring-0 rounded px-4 py-3 text-white placeholder-gray-600 transition-colors" id="password" required placeholder="••••••••" type="password"/>
+                </div>
+                <div class="flex items-center space-x-2 pt-2">
+                    <input class="w-4 h-4 rounded bg-[#1a1a1a] border-white/10 text-[#00d2ff] focus:ring-[#00d2ff]/20" id="remember" type="checkbox"/>
+                    <label class="text-sm text-gray-400 font-light" for="remember">Keep me authenticated</label>
+                </div>
+                <button id="submit-btn" class="w-full bg-[#00d2ff] text-black py-3.5 rounded font-medium tracking-wide mt-2 hover:bg-[#00b8e6] transition-colors" type="submit">
+                    Access SkillConnect
+                </button>
+
+                <div class="relative py-2 hidden" id="google-separator">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-white/10"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="bg-[#0f0f0f] px-2 text-xs text-gray-500 uppercase tracking-widest">Or continue with</span>
+                    </div>
+                </div>
+
+                <button type="button" id="google-login-btn" class="w-full bg-white text-black py-3.5 rounded font-medium tracking-wide hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                    </svg>
+                    <span>Google</span>
+                </button>
+
+                <p id="message" class="text-center text-sm font-medium mt-4"></p>
+            </form>
+
+            <div class="text-center border-t border-white/10 pt-6">
+                <p class="text-sm text-gray-400 font-light">
+                    <span id="toggle-text">New to the community?</span> 
+                    <a class="text-[#00d2ff] font-medium ml-1 cursor-pointer hover:text-white transition-colors" id="toggle-auth">Create profile</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative Top Edge -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary-container to-secondary z-50"></div>
+
+    <script src="js/config.js"></script>
+    <script>
+        const authModal = document.getElementById('auth-modal');
+        const openModalBtn = document.getElementById('open-modal-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        
+        const authForm = document.getElementById('auth-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const fullNameInput = document.getElementById('full-name');
+        const submitBtn = document.getElementById('submit-btn');
+        const toggleAuth = document.getElementById('toggle-auth');
+        const nameGroup = document.getElementById('name-group');
+        const authTitle = document.getElementById('auth-title');
+        const authSubtitle = document.getElementById('auth-subtitle');
+        const toggleText = document.getElementById('toggle-text');
+        const messageEl = document.getElementById('message');
+        const googleLoginBtn = document.getElementById('google-login-btn');
+        const googleSeparator = document.getElementById('google-separator');
+
+        let isLogin = true;
+
+        openModalBtn.addEventListener('click', () => {
+            authModal.classList.remove('hidden');
+            authModal.classList.add('flex');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            authModal.classList.add('hidden');
+            authModal.classList.remove('flex');
+        });
+
+        toggleAuth.addEventListener('click', () => {
+            isLogin = !isLogin;
+            if (isLogin) {
+                authTitle.textContent = 'Welcome back';
+                authSubtitle.textContent = 'Continue your journey with SkillConnect.';
+                nameGroup.style.display = 'none';
+                submitBtn.textContent = 'Access SkillConnect';
+                toggleText.textContent = 'New to the community?';
+                toggleAuth.textContent = 'Create profile';
+                googleLoginBtn.style.display = 'flex';
+                googleSeparator.style.display = 'block';
+            } else {
+                authTitle.textContent = 'Join SkillConnect';
+                authSubtitle.textContent = 'Create your scholarly profile today.';
+                nameGroup.style.display = 'block';
+                submitBtn.textContent = 'Join the Network';
+                toggleText.textContent = 'Already a member?';
+                toggleAuth.textContent = 'Log in';
+                googleLoginBtn.style.display = 'none';
+                googleSeparator.style.display = 'none';
+            }
+            messageEl.textContent = '';
+        });
+
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const fullName = fullNameInput.value;
+
+            messageEl.textContent = 'Processing...';
+            messageEl.className = 'text-center text-sm font-medium text-primary';
+
+            try {
+                if (isLogin) {
+                    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    messageEl.textContent = 'Login successful! Redirecting...';
+                    messageEl.className = 'text-center text-sm font-medium text-green-600';
+                    setTimeout(() => window.location.href = 'dashboard.html', 1500);
+                } else {
+                    const { error } = await supabaseClient.auth.signUp({
+                        email,
+                        password,
+                        options: { data: { full_name: fullName } }
+                    });
+                    if (error) throw error;
+                    messageEl.textContent = 'Signup successful! Check email for verification.';
+                    messageEl.className = 'text-center text-sm font-medium text-green-600';
+                }
+            } catch (error) {
+                messageEl.textContent = error.message;
+                messageEl.className = 'text-center text-sm font-medium text-red-600';
+            }
+        });
+
+        googleLoginBtn.addEventListener('click', async () => {
+            messageEl.textContent = 'Redirecting to Google...';
+            messageEl.className = 'text-center text-sm font-medium text-[#00d2ff]';
+            try {
+                // Determine exact dashboard URL cleanly
+                const currentUrl = new URL(window.location.href);
+                const redirectPath = currentUrl.pathname.replace('index.html', '') + 'dashboard.html';
+                const cleanRedirect = currentUrl.origin + redirectPath.replace('//', '/');
+
+                if (currentUrl.protocol === 'file:') {
+                    alert('ERROR: You cannot use Google Login on a file:/// address. Please run a local server (like Live Server in VSCode).');
+                    return;
+                }
+
+                const { error } = await supabaseClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: cleanRedirect
+                    }
+                });
+                if (error) throw error;
+            } catch (error) {
+                messageEl.textContent = error.message;
+                messageEl.className = 'text-center text-sm font-medium text-red-600';
+            }
+        });
+
+        // Robust session checking for OAuth Redirects
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' || session) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Fallback for already logged in users and Error Catching for OAuth
+        async function checkExistingSession() {
+            if (window.location.hash.includes('error=')) {
+                // If Supabase OAuth fails (e.g. Trigger error), it returns a hash with the error
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                const errorDesc = params.get('error_description') || params.get('error');
+                messageEl.textContent = 'Auth Error: ' + errorDesc.replace(/\+/g, ' ');
+                messageEl.className = 'text-center text-sm font-medium text-red-600';
+                return;
+            }
+
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) window.location.href = 'dashboard.html';
+        }
+        checkExistingSession();
+    </script>
+</body>
+</html>
