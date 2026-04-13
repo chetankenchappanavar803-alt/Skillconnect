@@ -253,21 +253,8 @@
             messageEl.textContent = 'Redirecting to Google...';
             messageEl.className = 'text-center text-sm font-medium text-[#00d2ff]';
             try {
-                // Determine exact dashboard URL cleanly
-                const currentUrl = new URL(window.location.href);
-                const redirectPath = currentUrl.pathname.replace('index.html', '') + 'dashboard.html';
-                const cleanRedirect = currentUrl.origin + redirectPath.replace('//', '/');
-
-                if (currentUrl.protocol === 'file:') {
-                    alert('ERROR: You cannot use Google Login on a file:/// address. Please run a local server (like Live Server in VSCode).');
-                    return;
-                }
-
                 const { error } = await supabaseClient.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: {
-                        redirectTo: cleanRedirect
-                    }
+                    provider: 'google'
                 });
                 if (error) throw error;
             } catch (error) {
