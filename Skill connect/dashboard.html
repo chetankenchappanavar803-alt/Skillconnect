@@ -43,21 +43,11 @@
         <button id="logout-btn" class="text-sm font-bold uppercase tracking-widest hover:text-primary">Logout</button>
     </nav>
 
-    <!-- Full-screen Split Container -->
-    <div class="w-full relative flex h-[calc(100vh-73px)] overflow-hidden">
+    <!-- Full-screen Container -->
+    <div class="w-full relative flex justify-center h-[calc(100vh-73px)] overflow-hidden">
         
-        <!-- 3D Area (Right Side) - INTERACTIVE -->
-        <div class="absolute inset-y-0 right-0 lg:-translate-x-12 w-full lg:w-[65%] z-0">
-            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script>
-            <spline-viewer url="https://prod.spline.design/ptApabdmm1VeShHH/scene.splinecode" class="w-full h-full object-cover"></spline-viewer>
-            <!-- Gradient to blend into the left side -->
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent pointer-events-none"></div>
-            <!-- Bottom fade gradient -->
-            <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none"></div>
-        </div>
-
-        <!-- Scrollable Content Area (Left Side) -->
-        <main class="relative z-10 w-full lg:w-1/2 p-8 md:p-12 overflow-y-auto h-full chat-scroll pb-32">
+        <!-- Scrollable Content Area -->
+        <main class="relative z-10 w-full max-w-7xl p-8 md:p-12 overflow-y-auto h-full chat-scroll pb-32">
             <header class="mb-12">
                 <h2 class="text-5xl font-black tracking-tighter mb-4">Welcome Back,<br/><span id="user-name" class="text-primary">Explorer</span></h2>
                 <p class="text-xl text-on-surface-variant max-w-2xl font-medium leading-relaxed">
@@ -65,7 +55,7 @@
                 </p>
             </header>
 
-            <div class="grid grid-cols-1 gap-6 max-w-md">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
             <!-- Card 1 -->
             <div class="group p-8 bg-surface-container rounded-3xl border border-transparent hover:border-primary/20 hover:bg-[#1a1a1a] transition-all duration-500 cursor-pointer" onclick="window.location.href='search.html'">
                 <div class="w-12 h-12 bg-primary-container rounded-2xl flex items-center justify-center mb-6">

@@ -53,12 +53,8 @@
 </head>
 <body class="bg-[#0a0a0a] font-body text-white antialiased overflow-hidden">
     <div class="h-screen w-full relative flex items-center">
-        <!-- 3D Full Background -->
-        <div class="fixed inset-0 w-full h-full z-0 pointer-events-none">
-            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script>
-            <spline-viewer id="hero-3d" loading-anim-type="spinner" url="https://prod.spline.design/IHYYsPUtc-zifUmv/scene.splinecode" class="w-full h-full object-cover" events-target="global"></spline-viewer>
-            <!-- Overlay to ensure text readability while seeing the whole scene -->
-            <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+        <!-- Background -->
+        <div class="fixed inset-0 w-full h-full z-0 pointer-events-none bg-gradient-to-br from-[#0a0a0a] to-[#111111]">
         </div>
 
         <!-- Hero Content Area (Left Side) -->
